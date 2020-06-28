@@ -37,7 +37,7 @@ server.on('listening', onListening);
  */
 
 var options = {
-  keys: fs.readFileSync(__dirname + '/private.key'),
+  key: fs.readFileSync(__dirname + '/private.key'),
   cert: fs.readFileSync(__dirname + '/certificate.pem')
 };
 
