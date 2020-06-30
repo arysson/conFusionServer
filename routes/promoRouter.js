@@ -10,9 +10,7 @@ const promoRouter = express.Router();
 
 promoRouter.use(bodyParser.json());
 
-promoRouter.route('/').options(cors.corsWithOptions, (req, res) => {
-    res.sendStatus(200);
-}).get(cors.cors, (req, res, next) => {
+promoRouter.route('/').options(cors.corsWithOptions, (req, res) => res.sendStatus(200)).get(cors.cors, (req, res, next) => {
     Promotions.find({}).then(promotions => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -36,9 +34,7 @@ promoRouter.route('/').options(cors.corsWithOptions, (req, res) => {
     }, err => next(err)).catch(err => next(err));
 });
 
-promoRouter.route('/:promoId').options(cors.corsWithOptions, (req, res) => {
-    res.sendStatus(200);
-}).get(cors.cors, (req, res, next) => {
+promoRouter.route('/:promoId').options(cors.corsWithOptions, (req, res) => res.sendStatus(200)).get(cors.cors, (req, res, next) => {
     Promotions.findById(req.params.promoId).then(promotion => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

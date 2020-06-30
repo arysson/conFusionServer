@@ -10,9 +10,7 @@ const leaderRouter = express.Router();
 
 leaderRouter.use(bodyParser.json());
 
-leaderRouter.route('/').options(cors.corsWithOptions, (req, res) => {
-    res.sendStatus(200);
-}).get(cors.cors, (req, res, next) => {
+leaderRouter.route('/').options(cors.corsWithOptions, (req, res) => res.sendStatus(200)).get(cors.cors, (req, res, next) => {
     Leaders.find({}).then(leaders => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -36,9 +34,7 @@ leaderRouter.route('/').options(cors.corsWithOptions, (req, res) => {
     }, err => next(err)).catch(err => next(err));
 });
 
-leaderRouter.route('/:leaderId').options(cors.corsWithOptions, (req, res) => {
-    res.sendStatus(200);
-}).get(cors.cors, (req, res, next) => {
+leaderRouter.route('/:leaderId').options(cors.corsWithOptions, (req, res) => res.sendStatus(200)).get(cors.cors, (req, res, next) => {
     Leaders.findById(req.params.leaderId).then(leader => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
