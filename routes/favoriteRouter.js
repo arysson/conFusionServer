@@ -6,6 +6,7 @@ const Favorite = require('../models/favorites');
 const cors = require('./cors');
 
 var authenticate = require('../authenticate');
+const Favorites = require('../models/favorites');
 
 const success = (res, obj) => {
     res.statusCode = 200;
@@ -51,9 +52,35 @@ favoriteRouter.route('/').options(cors.corsWithOptions, (req, res) => res.sendSt
     }).catch(err => next(err));
 });
 
-favoriteRouter.route('/:dishId').options(cors.corsWithOptions, (req, res) => res.sendStatus(200)).get(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    res.statusCode = 403;
-    res.end('GET operation not supported on /favorites/' + req.params.dishId);
+favoriteRouter.route('/:dishId').options(cors.corsWithOptions, (req, res) => res.sendStatus(200)).get(cors.cors, authenticate.verifyUser, (req, res, next) => {
+    Favorites.findOne({
+        user: req.user._id
+    }).then(favorites => {
+        if (!favorites) {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+                exists: false,
+                favorites: favorites
+            });
+        } else {
+            if (favorites.dishes.indexOf(req.params.dishId) < 0) {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({
+                    exists: false,
+                    favorites: favorites
+                });
+            } else {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({
+                    exists: true,
+                    favorites: favorites
+                });
+            }
+        }
+    }, err => next(err)).catch(err => next(err));
 }).post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Favorite.find({
         user: req.user._id
