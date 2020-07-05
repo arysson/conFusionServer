@@ -24,7 +24,7 @@ const uploadRouter = require('./routes/uploadRouter');
 
 var app = express();
 
-app.use(cors());
+// app.use(cors());
 
 // Secure traffic only
 app.all('*', (req, res, next) => {
