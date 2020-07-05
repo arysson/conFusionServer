@@ -8,6 +8,7 @@ var FileStore = require('session-file-store')(session);
 var passport = require('passport');
 
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,6 +23,8 @@ const Dishes = require('./models/dishes');
 const uploadRouter = require('./routes/uploadRouter');
 
 var app = express();
+
+app.use(cors());
 
 // Secure traffic only
 app.all('*', (req, res, next) => {

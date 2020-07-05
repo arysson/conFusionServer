@@ -100,7 +100,7 @@ favoriteRouter.route('/:dishId').options(cors.corsWithOptions, (req, res) => res
 }).delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Favorite.find({
         user: req.user._id
-    }).then(favorites => {
+    }).populate('dishes').then(favorites => {
         assert(favorites.length <= 1);
         if (favorites.length) {
             const favorite = favorites[0];
