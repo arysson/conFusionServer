@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 
 const favoriteSchema = new Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
         unique: true
     },
     dishes: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Dish'
     }]
 }, {
