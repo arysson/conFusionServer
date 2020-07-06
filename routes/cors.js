@@ -7,7 +7,7 @@ const whitelist = [
     'http://localhost:3000',
     'https://localhost:3443',
     'http://localhost:4200',
-    'http://aryssoncf-Lenovo-ideapad-330-15IKB:3001'
+    'http://localhost:3001'
 ];
 
 var corsOptionsDelegate = (req, callback) => {
